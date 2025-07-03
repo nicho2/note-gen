@@ -52,6 +52,9 @@ export function LanguageSwitch() {
         <DropdownMenuItem onClick={() => changeLanguage("ja")}>
           日本語 {currentLocale === "ja" && "✓"}
         </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage("fr")}>
+          Français {currentLocale === "fr" && "✓"}
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,0 +1,828 @@
+{
+  "app": {
+    "title": "Générateur de notes",
+    "description": "Votre assistant de prise de notes alimenté par l'IA"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "theme": "Thème",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système",
+    "pin": "Épingler",
+    "unpin": "Désépingler",
+    "settings": "Paramètres",
+    "sync": "Synchroniser",
+    "language": "Langue",
+    "confirm": "Confirmer",
+    "selectPrompt": "Sélectionner un prompt",
+    "prompt": "Prompt",
+    "success": "Succès",
+    "error": "Échec"
+  },
+  "settings": {
+    "rag": {
+      "title": "Base de connaissances",
+      "desc": "Vous pouvez ici configurer les paramètres liés à la base de connaissances basée sur la technologie RAG, qui convertit le texte en vecteurs puis utilise la recherche vectorielle pour fournir des réponses intelligentes.",
+      "settingsTitle": "Réglages des paramètres",
+      "settingsDesc": "En ajustant les paramètres, vous contrôlez plus précisément l'efficacité de la recherche.",
+      "deleteVectorConfirm": "Êtes-vous sûr de vouloir effacer la base de connaissances ?",
+      "deleteVectorSuccess": "Base de connaissances effacée avec succès",
+      "enable": "Activer la recherche dans la base de connaissances",
+      "enableDesc": "Lorsque cette option est activée, l'IA recherchera dans vos notes pour fournir des réponses plus précises.",
+      "chunkSize": "Taille des segments",
+      "chunkSizeDesc": "Nombre maximal de caractères par segment. Des segments plus grands augmentent la complexité des calculs de vecteurs.",
+      "chunkOverlap": "Chevauchement des segments",
+      "chunkOverlapDesc": "Nombre de caractères partagés entre les segments. Un chevauchement plus important maintient la continuité du contexte.",
+      "resultCount": "Nombre de résultats",
+      "resultCountDesc": "Nombre de documents renvoyés lors de la recherche. Plus il y en a, plus l'information est riche mais le bruit peut augmenter.",
+      "similarityThreshold": "Seuil de similarité",
+      "similarityThresholdDesc": "Seuil minimal de similarité (0,0-1,0). Plus il est élevé, plus la recherche est stricte.",
+      "resetToDefaults": "Réinitialiser par défaut",
+      "deleteVector": "Effacer la base de connaissances"
+    },
+    "editor": {
+      "title": "Éditeur Markdown",
+      "desc": "Ici, vous pouvez personnaliser l'éditeur Markdown pour créer une expérience d'écriture adaptée à vos besoins.",
+      "typewriterMode": "Mode machine à écrire",
+      "typewriterModeDesc": "En mode machine à écrire, l'éditeur simule une machine à écrire pour favoriser l'immersion dans l'écriture."
+    },
+    "uploadStore": {
+      "uploadConfirm": "Pour téléverser la configuration, assurez-vous que le dépôt de synchronisation est privé, sinon les données seront exposées !",
+      "downloadConfirm": "Le téléchargement de la configuration écrasera la configuration locale et prendra effet après redémarrage !",
+      "uploadSuccess": "Envoi réussi",
+      "downloadSuccess": "Téléchargement réussi",
+      "upload": "Téléverser",
+      "download": "Télécharger"
+    },
+    "about": {
+      "title": "À propos",
+      "desc": "Un assistant de prise de notes axé sur l'enregistrement et l'écriture.",
+      "version": "NoteGen v{version}",
+      "checkReleases": "Voir l'historique des versions",
+      "language": "Langue",
+      "checkUpdate": "Vérifier les mises à jour",
+      "checkError": "Échec lors de la vérification des mises à jour",
+      "updateAvailable": "Mettre à jour vers la nouvelle version",
+      "updateDownloading": "Mise à jour {downloaded} / {contentLength}",
+      "updateInstalled": "Redémarrer l'application",
+      "noUpdate": "La version actuelle est la plus récente",
+      "items": {
+        "github": {
+          "title": "GitHub",
+          "buttonName": "Voir"
+        },
+        "releases": {
+          "title": "Journal des mises à jour",
+          "buttonName": "Voir"
+        },
+        "issues": {
+          "title": "Signaler un problème",
+          "buttonName": "Retour"
+        },
+        "discussions": {
+          "title": "Discussions",
+          "buttonName": "Discuter"
+        }
+      }
+    },
+    "defaultModel": {
+      "title": "Modèle par défaut",
+      "desc": "Ici, vous pouvez utiliser différents modèles selon les scénarios afin d'améliorer l'efficacité et de réduire les coûts.",
+      "tooltip": "Utiliser le modèle principal",
+      "noModel": "Ne pas utiliser",
+      "placeholder": "Veuillez sélectionner ou rechercher des modèles",
+      "main": "Modèle principal",
+      "options" : {
+        "primaryModel": {
+          "title": "Modèle principal",
+          "desc": "En tant que modèle principal pour tous les scénarios, il est utilisé si les autres modèles de dialogue ne sélectionnent pas de modèle par défaut."
+        },
+        "markDesc": {
+          "title": "Description des enregistrements",
+          "desc": "Utilisé pour traiter les enregistrements après la reconnaissance OCR et générer des descriptions."
+        },
+        "placeholder": {
+          "title": "Suggestion IA",
+          "desc": "Les suggestions IA servent à générer du contenu dans l'espace réservé de la conversation IA de la page d'enregistrement."
+        },
+        "translate": {
+          "title": "Traduction",
+          "desc": "Utilisé pour les scénarios de traduction."
+        },
+        "embedding": {
+          "title": "Modèle d'embedding",
+          "desc": "Utilisé pour l'embedding et la vectorisation de texte."
+        },
+        "reranking": {
+          "title": "Modèle de re-classement",
+          "desc": "Utilisé pour réordonner et optimiser les résultats de recherche."
+        }
+      }
+    },
+    "prompt": {
+      "title": "Invite",
+      "promptTitle": "Titre de l'invite",
+      "desc": "Ici, vous pouvez ajouter et gérer des invites pour aider l'IA à mieux comprendre vos besoins.",
+      "addPrompt": "Ajouter une invite",
+      "selectPrompt": "Sélectionner une invite",
+      "configPrompt": "Configurer l'invite",
+      "noContent": "Aucun contenu",
+      "addPromptDesc": "Veuillez saisir le nom et le contenu de l'invite pour aider l'IA à mieux comprendre vos besoins.",
+      "promptTitlePlaceholder": "Veuillez saisir le nom de l'invite",
+      "promptContentPlaceholder": "Veuillez saisir le contenu de l'invite",
+      "promptContent": "Contenu de l'invite"
+    },
+    "sync": {
+      "title": "Synchronisation",
+      "desc": "Ici, vous pouvez configurer le dépôt de synchronisation afin de synchroniser les enregistrements, les fichiers Markdown, la configuration système et d'autres informations.",
+      "repoStatus": "État du dépôt",
+      "syncRepo": "Dépôt de synchronisation",
+      "syncRepoDesc": "Synchroniser les fichiers markdown en cours d'écriture",
+      "imageRepo": "Dépôt d'images",
+      "imageRepoDesc": "Synchronisez vos images dans le dépôt en utilisant jsdelivr pour l'accélération",
+      "private": "Privé",
+      "public": "Public",
+      "createdAt": "Créé {time}",
+      "updatedAt": "Dernière mise à jour {time}",
+      "newToken": "Créer un jeton d'accès",
+      "newTokenDesc": "Lors de la création d'un nouveau jeton, assurez-vous de cocher l'autorisation du dépôt ; après configuration, un dépôt de fichiers (privé) et un dépôt d'images seront automatiquement créés.",
+      "giteeTokenDesc": "Le jeton personnel Gitee est utilisé pour la synchronisation des données. Il nécessite des autorisations de lecture et d'écriture sur le dépôt. Après configuration, un dépôt de fichiers (privé) et un dépôt d'images seront automatiquement créés.",
+      "imageRepoSetting": "Stockage local/cloud",
+      "imageRepoSettingDesc": "Vous avez déjà configuré un dépôt d'images ; vous pouvez choisir de l'utiliser ou d'utiliser un stockage local.",
+      "jsdelivrSetting": "jsDelivr",
+      "jsdelivrSettingDesc": "Utiliser jsdelivr pour accélérer l'accès aux images.",
+      "autoSync": "Synchronisation automatique",
+      "giteeAutoSyncDesc": "Une fois activé, l'éditeur se synchronisera automatiquement sur Gitee 10 secondes après l'arrêt de la saisie",
+      "backupMethod": "Méthode de sauvegarde",
+      "backupMethodDesc": "Après avoir défini la méthode de sauvegarde principale, toutes les fonctions de synchronisation en écriture utiliseront la méthode actuelle (sauf pour l'hébergement d'images)",
+      "isPrimaryBackup": "{type} est la méthode de sauvegarde principale actuelle",
+      "setPrimaryBackup": "Définir comme sauvegarde principale",
+      "autoSyncOptions": {
+        "placeholder": "Sélectionnez le délai de synchronisation automatique",
+        "disabled": "Désactivé",
+        "10s": "10 secondes",
+        "30s": "30 secondes",
+        "1m": "1 minute",
+        "5m": "5 minutes",
+        "30m": "30 minutes"
+      }
+    },
+    "imageHosting": {
+      "title": "Hébergement d'images",
+      "desc": "Ici, vous pouvez configurer l'hébergement d'images et téléverser les images vers le service d'hébergement.",
+      "isPrimaryBackup": "Méthode d'hébergement d'images principale actuelle {type}",
+      "setPrimaryBackup": "Définir comme hébergement d'images principal"
+    },
+    "backupSync": {
+      "title": "Sauvegarde des données",
+      "desc": "Ici, vous pouvez utiliser d'autres méthodes pour sauvegarder vos données ; effectuez des sauvegardes régulières pour garantir la sécurité de vos informations.",
+      "webdav": {
+        "connectionState": {
+          "success": "Connecté",
+          "checking": "Connexion en cours",
+          "failed": "Non connecté"
+        },
+        "description": "WebDAV est uniquement utilisé comme solution de sauvegarde et ne prend pas en charge la synchronisation automatique, la restauration de l'historique ou d'autres fonctionnalités.",
+        "backupTo": "Sauvegarder sur WebDAV",
+        "syncFrom": "Synchroniser depuis WebDAV",
+        "serverUrl": "URL du serveur WebDAV",
+        "serverUrlDesc": "Entrez l'URL du serveur WebDAV, par exemple : https://dav.example.com",
+        "serverUrlPlaceholder": "https://dav.example.com",
+        "username": "Nom d'utilisateur",
+        "usernameDesc": "Nom d'utilisateur du serveur WebDAV",
+        "usernamePlaceholder": "Nom d'utilisateur",
+        "password": "Mot de passe",
+        "passwordDesc": "Mot de passe du serveur WebDAV",
+        "passwordPlaceholder": "Mot de passe",
+        "backupPath": "Chemin de sauvegarde",
+        "backupPathDesc": "Chemin de sauvegarde sur le serveur WebDAV, ex.: /backup/notes",
+        "backupPathPlaceholder": "/backup/notes",
+        "backupSuccess": "Sauvegarde réussie",
+        "backupSuccessDesc": "{count} fichiers sauvegardés sur WebDAV.",
+        "syncSuccess": "Synchronisation réussie",
+        "syncSuccessDesc": "{count} fichiers synchronisés de WebDAV vers le local."
+      }
+    },
+    "template": {
+      "title": "Modèle",
+      "customTemplate": "Modèle personnalisé",
+      "addTemplate": "Ajouter un modèle",
+      "deleteConfirm": "Supprimer ce modèle ?",
+      "status": "Statut",
+      "name": "Nom",
+      "content": "Contenu",
+      "scope": "Portée",
+      "selectScope": "Sélectionner la portée",
+      "addTemplateDesc": "Saisissez le nom et le contenu du modèle pour aider l'IA à mieux comprendre vos besoins.",
+      "editTemplate": "Modifier le modèle personnalisé",
+      "noContent": "Aucun contenu"
+    },
+    "shortcut": {
+      "title": "Raccourcis",
+      "screenshot": "Enregistrement de capture",
+      "link": "Enregistrement de lien",
+      "textRecord": "Enregistrement de texte",
+      "windowPin": "Épingler la fenêtre"
+    },
+    "theme": {
+      "title": "Apparence",
+      "appTheme": "Thème de l'application",
+      "previewTheme": "Thème du contenu de prévisualisation",
+      "codeTheme": "Thème de surlignage du code",
+      "selectTheme": "Sélectionner le thème"
+    },
+    "dev": {
+      "title": "Développeur",
+      "clearData": "Effacer les données",
+      "clearDataConfirm": "Voulez-vous vraiment effacer les données ?",
+      "proxy": "Proxy utilisé pour résoudre les problèmes réseau ; après configuration, il est recommandé de redémarrer l'application.",
+      "proxyPlaceholder": "Adresse du proxy"
+    },
+    "ai": {
+      "title": "Gestion des modèles",
+      "desc": "Ici, vous pouvez ajouter et gérer différents services de modèles personnalisés. Après configuration, vous débloquerez des fonctions liées à l'IA telles que l'organisation et la conversation.",
+      "modelTitle": "Nom personnalisé",
+      "modelConfigTitle": "Configuration du modèle",
+      "modelConfigDesc": "Chaque configuration correspond à un modèle d'IA. Vous pouvez créer de nouvelles configurations via des modèles ou de manière personnalisée.",
+      "create": "Créer",
+      "createDesc": "Sélectionnez une configuration vide ou créez-en une nouvelle à l'aide du modèle du fournisseur.",
+      "config": "Configurer",
+      "custom": "Personnaliser",
+      "addCustomModel": "Personnalisé",
+      "deleteCustomModel": "Supprimer",
+      "deleteCustomModelConfirm": "Voulez-vous vraiment supprimer ce modèle personnalisé ?",
+      "copyConfig": "Copier",
+      "builtin": "Intégré",
+      "modelSupport": "Prend uniquement en charge les modèles d'IA compatibles avec le protocole OpenAI",
+      "apiKeyUrl": "Créer une clé API",
+      "modelType": {
+        "title": "Type de modèle",
+        "desc": "Sélectionnez le type de modèle d'IA en fonction de ses capacités",
+        "chat": "Chat",
+        "image": "Image",
+        "video": "Vidéo",
+        "audio": "Audio",
+        "embedding": "Embedding",
+        "rerank": "Reclassement"
+      },
+      "modelList": {
+        "error": {
+          "title": "Échec de récupération de la liste des modèles",
+          "description": "Veuillez vérifier la clé API ou la connexion réseau"
+        }
+      },
+      "selectModel": "Veuillez sélectionner un modèle",
+      "modelProviderDesc": "Les modèles personnalisés ne prennent en charge que les modèles IA compatibles avec le protocole OpenAI.",
+      "modelTitleDesc": "Nom personnalisé utilisé pour identifier les modèles IA, veuillez ne pas dupliquer.",
+      "modelBaseUrlDesc": "Vous devez seulement configurer le numéro de version, par exemple : https://api.openai.com/v1, le suffixe sera ajouté automatiquement.",
+      "modelDesc": "Certains modèles permettent d'obtenir la liste des modèles ; s'ils ne le permettent pas, veuillez configurer manuellement.",
+      "temperatureDesc": "Contrôle l'aléatoire des sorties. Des valeurs plus basses rendent le contenu généré plus déterministe.",
+      "topPDesc": "Méthode de prélèvement nucléaire où le modèle considère les tokens dont la masse de probabilité cumulée est supérieure à top_p. Par exemple, 0,1 signifie que seuls les 10 % de probabilité les plus élevés sont pris en compte. Nous recommandons généralement de modifier cette valeur ou la température, mais pas les deux."
+    },
+    "ocr": {
+      "title": "OCR",
+      "languagePacks": "Packs de langues",
+      "checkModels": "Vérifier tous les modèles ici",
+      "modelInstruction": "Séparez par des virgules, par ex. : eng,chi_sim"
+    },
+    "file": {
+      "title": "Paramètres des fichiers",
+      "desc": "Ici, vous pouvez gérer le répertoire de travail et d'autres options liées aux fichiers.",
+      "workspace": {
+        "title": "Paramètres du répertoire de travail",
+        "desc": "Définissez le répertoire de travail de l'application où les fichiers seront enregistrés",
+        "current": "Chemin du répertoire de travail actuel",
+        "default": "Utilisation du chemin de travail par défaut",
+        "custom": "Utilisation d'un chemin de travail personnalisé",
+        "select": "Sélectionner le répertoire de travail",
+        "reset": "Réinitialiser le chemin par défaut"
+      },
+      "info": {
+        "title": "Informations sur le répertoire",
+        "desc": "Après avoir changé de répertoire, vous devez redémarrer l'application pour que les modifications prennent effet. Les fichiers du nouveau répertoire seront affichés après redémarrage."
+      },
+      "toast": {
+        "updated": "Répertoire mis à jour",
+        "updatedDesc": "Répertoire défini sur : {path}",
+        "reset": "Répertoire réinitialisé",
+        "resetDesc": "Répertoire par défaut restauré",
+        "error": "Échec de la sélection du répertoire",
+        "errorDesc": "Impossible de sélectionner le répertoire, veuillez réessayer",
+        "resetError": "Échec de la réinitialisation du répertoire",
+        "resetErrorDesc": "Impossible de réinitialiser le répertoire par défaut, veuillez réessayer"
+      },
+      "assets": {
+        "title": "Chemin des ressources",
+        "desc": "Définissez le chemin où seront enregistrées les ressources (images, vidéos, fichiers, etc.) utilisées lors de la rédaction. Les ressources seront enregistrées au même niveau que le fichier Markdown actuellement édité.",
+        "select": "Définir le chemin de sauvegarde des ressources utilisées lors de la rédaction"
+      }
+    }
+  },
+  "record": {
+    "trash": {
+      "title": "Vider la corbeille",
+      "confirm": "Voulez-vous vraiment vider la corbeille ?",
+      "records": "{count} éléments peuvent être restaurés",
+      "empty": "Vider",
+      "close": "Fermer la corbeille"
+    },
+    "queue": {
+      "ocr": "Reconnaissance OCR",
+      "ai": "Analyse de contenu IA",
+      "upload": "Téléverser vers l'hébergeur d'images",
+      "jsdelivr": "Notifier le cache jsdelivr",
+      "recording": "Enregistrement...",
+      "recorded": "Enregistré",
+      "record": "Enregistrer",
+      "detected": "Détecté"
+    },
+    "mark": {
+      "empty": "Aucun enregistrement pour l'instant",
+      "loading": "Chargement...",
+      "createdAt": "Créé le",
+      "type": {
+        "scan": "Scan",
+        "image": "Image",
+        "screenshot": "Capture d'écran",
+        "text": "Texte",
+        "file": "Fichier",
+        "link": "Lien",
+        "upload": "Téléverser l'enregistrement",
+        "download": "Télécharger l'enregistrement"
+      },
+      "uploadSuccess": "Enregistrement téléversé avec succès",
+      "downloadSuccess": "Enregistrement téléchargé avec succès",
+      "desc": "Description",
+      "content": "Contenu",
+      "progress": {
+        "cacheImage": "Mise en cache de l'image",
+        "ocr": "Reconnaissance OCR",
+        "aiAnalysis": "Analyse de contenu IA",
+        "uploadImage": "Téléversement vers l'hébergeur d'images",
+        "jsdelivrCache": "Notification du cache jsdelivr",
+        "cacheFile": "Mise en cache du fichier",
+        "cacheScreenshot": "Mise en cache de la capture",
+        "textAnalysis": "Analyse du texte",
+        "save": "Sauvegarde",
+        "saveImage": "Sauvegarde de l'image",
+        "newToken": "Créer un jeton d'accès",
+        "newTokenDesc": "Le nouveau jeton doit disposer des autorisations du dépôt ; la configuration créera automatiquement un dépôt de fichiers privé et un dépôt d'images."
+      },
+      "text": {
+      "title": "Enregistrer un texte",
+      "description": "Enregistre un morceau de texte qui sera inséré à l'endroit adéquat lors de l'organisation des notes.",
+      "characterCount": "{count} caractères",
+      "save": "Enregistrer"
+      },
+
+      "link": {
+      "title": "Enregistrer un lien",
+      "description": "Saisissez un lien web, le système récupérera automatiquement la page et la sauvegardera",
+      "save": "Enregistrer"
+      },
+      "clipboard": {
+      "detectedImage": "Image détectée dans le presse-papiers",
+      "detectedText": "Texte détecté dans le presse-papiers"
+      },
+      "tag": {
+      "searchPlaceholder": "Créer ou rechercher des tags...",
+      "noResults": "Aucun tag correspondant",
+      "quickAdd": "Création rapide",
+      "pinned": "Épinglés",
+      "others": "Autres",
+      "rename": "Renommer",
+      "delete": "Supprimer",
+      "pin": "Épingler",
+      "unpin": "Désépingler"
+      },
+      "mark": {
+        "type": {
+          "text": "Texte"
+        },
+        "chat": {
+          "placeholder": {
+            "default": "Posez des questions ou organisez vos notes en article...",
+            "noApiKey": "Clé API non configurée, la fonction de chat IA est indisponible..."
+          },
+          "header": {
+            "configApiKey": "Configurer la clé API",
+            "clearChat": "Effacer le chat"
+          },
+          "clipboard": {
+            "image": {
+              "detected": "Image détectée dans le presse-papiers :",
+              "recording": "Enregistrement...",
+              "recorded": "Enregistré",
+              "record": "Enregistrer"
+            },
+            "text": {
+              "detected": "Texte détecté dans le presse-papiers :",
+              "recorded": "Enregistré",
+              "record": "Enregistrer"
+            }
+          },
+          "messageControl": {
+            "words": "mots"
+          },
+          "empty": {
+            "features": [
+              {
+                "chat": "Discuter avec le bot IA"
+              },
+              {
+                "linked": "Lié à vos enregistrements"
+              },
+              {
+                "clipboard": "Reconnaître les enregistrements du presse-papiers"
+              },
+              {
+                "organize": "Organiser vos enregistrements en notes"
+              }
+            ]
+          },
+          "content": {
+            "organize": "Organiser vos enregistrements en article :"
+          },
+          "note": {
+            "writing": "Écriture",
+            "convert": "Convertir l'article",
+            "description": "Cette note est générée par l'IA et ne peut être modifiée. Convertissez-la en article (fichier local) pour poursuivre l'édition.",
+            "filename": "Nom de fichier",
+            "selectFolder": "Choisir un dossier",
+            "rootDirectory": "Répertoire racine",
+            "deleteTag": "Supprimer le tag actuel, les enregistrements et les notes (restaurables depuis la corbeille)",
+            "warning": "Après la conversion, vous serez redirigé vers la page d'écriture.",
+            "convert_button": "Convertir"
+          },
+          "mark": {
+            "recorded": "Enregistré",
+            "record": "Enregistrer"
+          },
+          "send": "Envoyer"
+        },
+        "text": {
+          "title": "Enregistrer du texte",
+          "description": "Enregistrer un texte qui sera inséré à la bonne position lors de l'organisation des notes.",
+          "characterCount": "{count} caractères",
+          "save": "Enregistrer"
+        },
+        "clipboard": {
+          "detectedImage": "Image détectée dans le presse-papiers",
+          "detectedText": "Texte détecté dans le presse-papiers"
+        },
+        "tag": {
+          "searchPlaceholder": "Créer ou rechercher des tags...",
+          "noResults": "Aucun tag correspondant",
+          "quickAdd": "Création rapide",
+          "pinned": "Épinglés",
+          "others": "Autres",
+          "rename": "Renommer",
+          "delete": "Supprimer",
+          "pin": "Épingler",
+          "unpin": "Désépingler"
+        },
+        "progress": {
+          "cacheImage": "Mise en cache de l'image",
+          "ocr": "Reconnaissance OCR",
+          "aiAnalysis": "Analyse du contenu par IA",
+          "uploadImage": "Téléversement vers l'hébergeur d'images",
+          "jsdelivrCache": "Notification du cache jsdelivr",
+          "cacheFile": "Mise en cache du fichier",
+          "cacheScreenshot": "Mise en cache de la capture d'écran",
+          "textAnalysis": "Analyse du texte",
+          "save": "Enregistrement",
+          "saveImage": "Enregistrement de l'image"
+        }
+      },
+      "toolbar": {
+      "search": "Rechercher",
+      "trash": "Corbeille",
+      "restore": "Restaurer",
+      "delete": "Supprimer",
+      "deleteConfirm": "Confirmer la suppression ?",
+      "moveTag": "Déplacer vers le tag",
+      "convertTo": "Convertir en {type}",
+      "copyLink": "Copier le lien",
+      "copied": "Copié dans le presse-papiers !",
+      "regenerateDesc": "Régénérer la description",
+      "viewFolder": "Afficher dans le dossier",
+      "viewFile": "Voir le fichier original",
+      "deleteForever": "Supprimer définitivement",
+      "sortByName": "Trier par nom",
+      "sortByCreated": "Trier par date de création",
+      "sortByModified": "Trier par date de modification",
+      "sortAsc": "Tri ascendant",
+      "sortDesc": "Tri descendant",
+      "sort": "Trier",
+      "processingVectors": "Traitement des vecteurs",
+      "calculateVectors": "Calculer les vecteurs de documents",
+      "enableVectorDb": "Activer la base vectorielle"
+      }
+    },
+    "chat": {
+      "empty": {
+        "features": [
+          {
+            "chat": "Discuter avec le bot IA"
+          },
+          {
+            "linked": "Lié à vos enregistrements"
+          },
+          {
+            "clipboard": "Reconnaître les enregistrements du presse-papiers"
+          },
+          {
+            "organize": "Organiser vos enregistrements en notes"
+          }
+        ]
+      },
+      "newChat": "Nouveau chat avec un nouveau tag",
+      "removeChat": "Supprimer le chat du tag actuel",
+      "confirmNew": "Créer un nouveau tag",
+      "confirmNewDescription": "Voulez-vous créer un nouveau tag pour commencer la conversation ?",
+      "confirmRemove": "Supprimer le tag",
+      "confirmRemoveDescription": "Supprimer ce tag supprimera aussi tous les enregistrements qu'il contient. Veuillez confirmer.",
+      "content": {
+        "organize": "Organiser vos enregistrements en article :"
+      },
+      "note": {
+        "writing": "Écriture",
+        "convert": "Convertir l'article",
+        "description": "Cette note est générée par l'IA et ne peut être modifiée. Convertissez-la en article (fichier local) pour poursuivre l'édition.",
+        "filename": "Nom de fichier",
+        "selectFolder": "Choisir un dossier",
+        "rootDirectory": "Répertoire racine",
+        "deleteTag": "Supprimer le tag actuel, les enregistrements et les notes (restaurables depuis la corbeille)",
+        "warning": "Après la conversion, vous serez redirigé vers la page d'écriture.",
+        "convert_button": "Convertir"
+      },
+      "mark": {
+        "recorded": "Enregistré",
+        "record": "Enregistrer"
+      },
+        "input": {
+          "organize": "Organiser",
+          "chat": "Chat",
+          "placeholder": {
+            "default": "Tapez un message...",
+            "noApiKey": "Aucune clé API configurée, impossible d'utiliser le chat IA...",
+            "on": "Suggestions IA activées",
+            "off": "Suggestions IA désactivées",
+            "noPrimaryModel": "Aucun modèle principal configuré, impossible d'utiliser le chat IA..."
+          },
+          "translate": {
+            "tooltip": "Traduire",
+            "translating": "Traduction en cours...",
+            "showOriginal": "Afficher l'original",
+            "alreadyTranslated": "Traduit en"
+          },
+          "clipboardMonitor": {
+            "enable": "Surveillance du presse-papiers (activée)",
+            "disable": "Surveillance du presse-papiers (désactivée)"
+          },
+          "send": "Envoyer",
+          "terminate": "Terminer",
+          "tagLink": {
+            "on": "Lié au tag",
+            "off": "Non lié au tag"
+          },
+          "modelSelect": {
+            "tooltip": "Sélectionner le modèle IA",
+            "placeholder": "Rechercher des modèles IA"
+          },
+          "promptSelect": {
+            "tooltip": "Sélectionner l'invite",
+            "placeholder": "Rechercher des invites"
+          },
+          "clearChat": "Effacer la conversation",
+          "clearContext": {
+            "tooltip": "Effacer le contexte"
+          },
+          "chatLanguage": {
+            "tooltip": "Sélectionner la langue du chat",
+            "placeholder": "Rechercher une langue"
+          },
+          "rag": {
+            "notSupported": "Modèle vectoriel non pris en charge",
+            "enabled": "Recherche dans la base de connaissances (activée)",
+            "disabled": "Recherche dans la base de connaissances (désactivée)"
+          }
+        },
+        "header": {
+          "configApiKey": "Configurer la clé API",
+          "clearChat": "Effacer le chat",
+          "selectPrompt": "Sélectionner l'invite"
+        },
+        "clipboard": {
+          "image": {
+            "detected": "Image détectée dans le presse-papiers :",
+            "recording": "Enregistrement...",
+            "recorded": "Enregistré",
+            "record": "Enregistrer"
+          },
+          "text": {
+            "detected": "Texte détecté dans le presse-papiers :",
+            "recorded": "Enregistré",
+            "record": "Enregistrer"
+          }
+        },
+        "messageControl": {
+          "words": "mots"
+        },
+        "preview": {
+          "close": "Fermer",
+          "copy": "Copier",
+          "copied": "Copié !"
+        },
+        "control": {
+          "edit": "Modifier",
+          "save": "Enregistrer",
+          "cancel": "Annuler",
+          "delete": "Supprimer",
+          "deleteConfirm": "Voulez-vous vraiment supprimer ce message ?"
+        }
+    },
+    "tag": {
+      "add": "Ajouter un tag",
+      "edit": "Modifier le tag",
+      "delete": "Supprimer le tag",
+      "deleteConfirm": "Voulez-vous vraiment supprimer ce tag ?",
+      "placeholder": "Entrez le nom du tag"
+    }
+  },
+  "search": {
+    "placeholder": "Rechercher dans les notes et les articles...",
+    "results": "{count} résultats de recherche",
+    "noResults": "Aucun résultat",
+    "item": {
+      "record": "Enregistrement",
+      "article": "Article",
+      "matches": "{count} correspondances",
+      "scanType": "scan"
+    }
+  },
+  "image": {
+    "root": "Dépôt d'images",
+    "noData": {
+      "title": "Fonction de synchronisation désactivée",
+      "desc": "Veuillez aller dans les paramètres système pour configurer la synchronisation Github.",
+      "goToSettings": "Aller aux paramètres",
+      "howToUse": "Comment utiliser la synchronisation ?"
+    }
+  },
+  "navigation": {
+    "chat": "Chat",
+    "record": "Enregistrements",
+    "write": "Écrire",
+    "search": "Recherche",
+    "gallery": "Galerie",
+    "login": "Connexion",
+    "loading": "Chargement",
+    "view": "Voir",
+    "logout": "Déconnexion",
+    "setting": "Paramètres"
+  },
+  "marks": {
+    "types": {
+      "screenshot": "Capture d'écran",
+      "text": "Texte",
+      "image": "Image"
+    }
+  },
+  "tags": {
+    "inspiration": "Inspiration"
+  },
+  "sync": {
+    "status": "État du dépôt de synchronisation",
+    "imageRepo": "Dépôt d'images",
+    "articleRepo": "Dépôt d'articles"
+  },
+  "ai": {
+    "thinking": "Réflexion en cours",
+    "error": {
+      "title": "Erreur IA",
+      "noAddress": "Veuillez d'abord définir l'adresse de l'IA"
+    }
+  },
+  "article": {
+    "file": {
+      "toolbar": {
+      "accessRepo": "Accéder au dépôt",
+      "loadingSync": "Chargement des informations de synchronisation",
+      "configSync": "Configurer la synchronisation",
+      "newArticle": "Nouvel article",
+      "newFolder": "Nouveau dossier",
+      "refresh": "Rafraîchir",
+      "toggleFolders": "Afficher/Masquer les dossiers",
+      "expandAll": "Tout développer",
+      "collapseAll": "Tout réduire",
+      "sortByName": "Trier par nom",
+      "sortByCreated": "Trier par date de création",
+      "sortByModified": "Trier par date de modification",
+      "sortAsc": "Tri ascendant",
+      "sortDesc": "Tri descendant",
+      "sort": "Trier",
+      "processingVectors": "Traitement des vecteurs",
+      "calculateVectors": "Calcul complet de la base de connaissances",
+      "enableVectorDb": "Activer la base vectorielle"
+      },
+      "context": {
+      "viewDirectory": "Voir le dossier",
+      "cut": "Couper",
+      "copy": "Copier",
+      "paste": "Coller",
+      "rename": "Renommer",
+      "deleteSyncFile": "Supprimer le fichier synchronisé",
+      "deleteLocalFile": "Supprimer le fichier local",
+      "delete": "Supprimer",
+      "newFile": "Nouveau fichier",
+      "newFolder": "Nouveau dossier",
+      "deleteSyncFileSuccess": "Fichier synchronisé supprimé",
+      "deleteSyncFileError": "Erreur lors de la suppression du fichier synchronisé"
+      },
+      "error": {
+      "fileExists": "Le nom du fichier existe déjà"
+      },
+      "clipboard": {
+      "copied": "Copié dans le presse-papiers",
+      "cut": "Coupé dans le presse-papiers",
+      "pasted": "Collé avec succès",
+      "pasteFailed": "Échec du collage",
+      "empty": "Presse-papiers vide",
+      "confirmOverwrite": "Le fichier existe déjà, voulez-vous l'écraser ?",
+      "notSupported": "Opération non supportée"
+      },
+      "deleteConfirm": "Voulez-vous vraiment supprimer ce fichier ?"
+    },
+    "editor": {
+      "copySuccess": "Copié dans le presse-papiers",
+      "copySuccessDescription": "Copié dans le presse-papiers",
+      "upload": {
+        "error": "Échec du téléversement",
+        "needToken": "Le téléversement d'images nécessite la configuration d'un accessToken",
+        "uploading": "Téléversement de l'image"
+      },
+      "toolbar": {
+        "mark": {
+          "title": "Enregistrements",
+          "tooltip": "Utiliser les enregistrements",
+          "description": "Convertir les enregistrements en contenu à insérer dans l'article.",
+          "noRecords": "Aucun enregistrement",
+          "ocrNoContent": "OCR n'a reconnu aucun contenu"
+        },
+        "question": {
+          "tooltip": "Q&R",
+          "selectContent": "Veuillez d'abord sélectionner du contenu",
+          "promptTemplate": "Texte de référence : {content}\nÀ partir de la question : {question}, fournissez directement la réponse."
+        },
+        "continue": {
+          "tooltip": "Continuer",
+          "promptTemplate": "À partir du texte précédent : \"{content}\" continuez l'écriture en retournant un contenu de 100 mots maximum.\nVous pouvez vous appuyer sur le texte suivant : \"{endContent}\", sans en reproduire le contenu."
+        },
+        "polish": {
+          "tooltip": "Améliorer",
+          "selectContent": "Veuillez d'abord sélectionner du contenu",
+          "promptTemplate": "Améliorer ce texte : {content}, sans changer la langue, corriger les fautes et retourner directement le résultat corrigé."
+        },
+        "eraser": {
+          "tooltip": "Simplifier",
+          "selectContent": "Veuillez d'abord sélectionner du contenu",
+          "promptTemplate": "Simplifier ce texte : {content}, il est trop long ; réduire d'au moins moitié le nombre de mots sans changer la langue et retourner le résultat optimisé."
+        },
+        "translation": {
+          "tooltip": "Traduire",
+          "description": "Traduire le texte sélectionné",
+          "selectContent": "Veuillez d'abord sélectionner du contenu",
+          "promptTemplate": "Traduire ce texte : {content} en {language} et retourner directement le résultat traduit."
+        }
+      }
+    },
+    "footer": {
+      "wordCount": "Mots",
+      "sync": {
+        "sync": "Synchroniser",
+        "synced": "Synchronisé",
+        "syncing": "Synchronisation",
+        "syncFailed": "Échec de la synchronisation",
+        "checkNetworkOrToken": "Vérifiez la connexion réseau ou le token GitHub",
+        "quickSync": "Sync rapide"
+      },
+      "history": {
+        "loadingHistory": "Chargement de l'historique",
+        "historyRecords": "Historique",
+        "noHistory": "Aucun historique",
+        "loading": "Chargement",
+        "recordsCount": "enregistrements",
+        "filterQuickSync": "Filtrer les synchronisations rapides",
+        "committedAt": "commit à",
+        "pull": "Pull",
+        "quickSync": "Sync rapide"
+      }
+    }
+  }
+}
